@@ -160,12 +160,12 @@ void main() throws InterruptedException {
         Thread.sleep(2000);
 
         // Step 17: check success
-        WebElement successModal = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[1]/div/div[5]/div/div")));
+        WebElement successModal = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[1]/div/div[4]/div/div")));
 
         if (successModal != null && successModal.isDisplayed()) {
             IO.println("education added successfully");
         } else {
-            IO.println("Test failed");
+            IO.println("test failed");
         }
 
     } catch (Exception e) {
