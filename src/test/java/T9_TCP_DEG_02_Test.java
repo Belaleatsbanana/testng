@@ -83,7 +83,7 @@ public class T9_TCP_DEG_02_Test {
         if (targetItem.isEmpty()) {
             System.out.println("education deleted successfully");
         } else {
-            System.out.println("Test failed");
+            System.out.println("test failed");
         }
         driver.close();
         driver.quit();

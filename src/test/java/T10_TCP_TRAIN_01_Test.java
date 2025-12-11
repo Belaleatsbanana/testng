@@ -120,9 +120,9 @@ public class T10_TCP_TRAIN_01_Test {
         ));
 
         if (successElement.isDisplayed()) {
-            System.out.println("training added successfully");
+            System.out.println("training added");
         } else {
-            System.out.println("Test failed");
+            System.out.println("test failed");
         }
         driver.close();
         driver.quit();

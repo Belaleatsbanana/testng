@@ -84,7 +84,7 @@ void main() throws InterruptedException {
         if (actualErrorMessage.equals(expectedErrorMessage)) {
             IO.println("validation error showed");
         } else {
-            IO.println("Test failed");
+            IO.println("test failed");
         }
 
     } catch (Exception e) {

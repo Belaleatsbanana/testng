@@ -108,7 +108,7 @@ void main() throws InterruptedException {
         if (actualErrorMessage.contains("Please add at least")) {
             IO.println("validation error showed");
         } else {
-            IO.println("Test failed");
+            IO.println("test failed");
         }
 
     } catch (Exception e) {

@@ -231,7 +231,7 @@ public class T7_TCP_DEG_01_Test {
         if (successModal.isDisplayed()) {
             System.out.println("education added successfully");
         } else {
-            System.out.println("Test failed");
+            System.out.println("test failed");
         }
         driver.close();
         driver.quit();

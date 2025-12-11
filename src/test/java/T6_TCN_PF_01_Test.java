@@ -196,7 +196,7 @@ public class T6_TCN_PF_01_Test {
         if (validationError.isDisplayed() && actualErrorMessage.equals(expectedErrorMessage)) {
             System.out.println("validation error showed");
         } else {
-            System.out.println("Test failed");
+            System.out.println("test failed");
         }
         driver.close();
         driver.quit();

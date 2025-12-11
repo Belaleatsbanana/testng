@@ -107,9 +107,9 @@ void main() throws InterruptedException {
         ));
 
         if (successElement.isDisplayed()) {
-            IO.println("training added successfully");
+            IO.println("training added");
         } else {
-            IO.println("Test failed");
+            IO.println("test failed");
         }
 
     } catch (Exception e) {

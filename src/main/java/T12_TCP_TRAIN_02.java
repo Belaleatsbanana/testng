@@ -59,9 +59,9 @@ void main() throws InterruptedException {
         List<WebElement> remainingTrainings = driver.findElements(By.xpath(assertionXpath));
 
         if (remainingTrainings.isEmpty()) {
-            IO.println("training deleted successfully");
+            IO.println("training deleted");
         } else {
-            IO.println("Test failed");
+            IO.println("test failed");
         }
 
     } catch (Exception e) {

@@ -56,9 +56,9 @@ void main() throws InterruptedException {
         List<WebElement> targetItem = driver.findElements(By.xpath("/html/body/div[1]/div/div[2]/div[2]/div[2]/ul/li[2]"));
 
         if (targetItem.isEmpty()) {
-            IO.println("education deleted successfully");
+            IO.println("education deleted");
         } else {
-            IO.println("Test failed");
+            IO.println("test failed");
         }
 
     } catch (Exception e) {

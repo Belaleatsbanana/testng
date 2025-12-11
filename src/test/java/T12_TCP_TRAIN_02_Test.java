@@ -83,9 +83,9 @@ public class T12_TCP_TRAIN_02_Test {
         List<WebElement> remainingTrainings = driver.findElements(By.xpath(assertionXpath));
 
         if (remainingTrainings.isEmpty()) {
-            System.out.println("training deleted successfully");
+            System.out.println("training deleted");
         } else {
-            System.out.println("Test failed");
+            System.out.println("test failed");
         }
         driver.close();
         driver.quit();

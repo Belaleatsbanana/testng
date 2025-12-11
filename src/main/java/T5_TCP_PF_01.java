@@ -181,7 +181,7 @@ void main() throws InterruptedException {
         ));
 
         if (successModal.isDisplayed()) {
-            IO.println("profile updated successfully");
+            IO.println("profile updated");
         } else {
             IO.println("test failed");
         }

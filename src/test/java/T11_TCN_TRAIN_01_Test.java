@@ -128,7 +128,7 @@ public class T11_TCN_TRAIN_01_Test {
         if (actualErrorMessage.equals(expectedErrorMessage)) {
             System.out.println("validation error showed");
         } else {
-            System.out.println("Test failed");
+            System.out.println("test failed");
         }
         driver.close();
         driver.quit();

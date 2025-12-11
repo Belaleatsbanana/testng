@@ -89,7 +89,7 @@ public class T3_TCN_PART_01_Test {
         if (actualErrorMessage.equals(expectedErrorMessage)) {
             System.out.println("captcha error displayed");
         } else {
-            System.out.println("Test failed");
+            System.out.println("test failed");
         }
 
         driver.close();
