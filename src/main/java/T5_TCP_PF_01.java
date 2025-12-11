@@ -8,9 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 void main() throws InterruptedException {
-    // Set ChromeDriver path
     System.setProperty("webdriver.chrome.driver", "/home/fax/Downloads/chromedriver-linux64/chromedriver");
-
 
     ChromeOptions option = new ChromeOptions();
     option.addArguments("--remote-allow-origins=*");
@@ -19,258 +17,155 @@ void main() throws InterruptedException {
 
     driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
-    IO.println("Starting Profile Information Update Test...");
-
     try {
-        // Step 1: Login using WuzzufLogin utility
-        WuzzufLogin loginHelper = new WuzzufLogin(driver);
-        loginHelper.login();
-        Thread.sleep(2000);
 
-        // Create WebDriverWait for explicit waits
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        // Step 2: Click on user profile dropdown/menu
-        WebElement profileDropdown = wait.until(
-                ExpectedConditions.elementToBeClickable(
-                        By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div")
-                )
-        );
-        profileDropdown.click();
-        IO.println("Clicked on profile dropdown");
-        Thread.sleep(1500);
-
-        // Step 3: Click on profile menu option
-        WebElement profileMenuOption = wait.until(
-                ExpectedConditions.elementToBeClickable(
-                        By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div[2]/div/div[4]/a/span")
-                )
-        );
-        profileMenuOption.click();
-        IO.println("Navigated to profile page");
+        // Step 1: login
+        new WuzzufLogin(driver).login();
         Thread.sleep(2000);
 
-        // Step 4: Fill in First Name
+        // Step 2: click profile
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div"))).click();
+        IO.println("clicked profile");
+        Thread.sleep(1500);
+
+        // Step 3: go to profile page
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div[2]/div/div[4]/a/span"))).click();
+        IO.println("went to profile");
+        Thread.sleep(2000);
+
+        // Step 4: fill first name
         WebElement firstNameField = wait.until(ExpectedConditions.elementToBeClickable(By.name("firstName")));
         firstNameField.click();
-        firstNameField.sendKeys(Keys.CONTROL + "a");
-        firstNameField.sendKeys(Keys.DELETE);
-        firstNameField.sendKeys("dummy");
-        IO.println("Entered first name: dummy");
+        firstNameField.sendKeys(Keys.CONTROL + "a", Keys.DELETE, "dummy");
+        IO.println("filled first name");
         Thread.sleep(500);
 
-        // Step 5: Fill in Middle Name
-        WebElement middleNameField = driver.findElement(By.name("middleName"));
-        middleNameField.click();
-        middleNameField.sendKeys(Keys.CONTROL + "a");
-        middleNameField.sendKeys(Keys.DELETE);
-        middleNameField.sendKeys("shams");
-        IO.println("Entered middle name: shams");
+        // Step 5: fill middle name
+        driver.findElement(By.name("middleName")).sendKeys(Keys.CONTROL + "a", Keys.DELETE, "shams");
+        IO.println("filled middle name");
         Thread.sleep(500);
 
-        // Step 6: Fill in Last Name
-        WebElement lastNameField = driver.findElement(By.name("lastName"));
-        lastNameField.click();
-        lastNameField.sendKeys(Keys.CONTROL + "a");
-        lastNameField.sendKeys(Keys.DELETE);
-        lastNameField.sendKeys("bell");
-        IO.println("Entered last name: bell");
+        // Step 6: fill last name
+        driver.findElement(By.name("lastName")).sendKeys(Keys.CONTROL + "a", Keys.DELETE, "bell");
+        IO.println("filled last name");
         Thread.sleep(500);
 
-        // Step 7: Select Birth Day
-        WebElement birthDayInput = driver.findElement(By.id("react-select-2-input"));
-        birthDayInput.click();
-        IO.println("Clicked birth day dropdown");
+        // Step 7: select birth day
+        driver.findElement(By.id("react-select-2-input")).click();
         Thread.sleep(1500);
-
-        // Wait for options to appear and select first option
-        WebElement birthDayOption = wait.until(
-                ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'react-select-2-option')]"))
-        );
-        birthDayOption.click();
-        IO.println("Selected birth day");
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'react-select-2-option')]"))).click();
+        IO.println("selected birth day");
         Thread.sleep(1000);
 
-        // Step 8: Select Birth Month
-        WebElement birthMonthInput = driver.findElement(By.id("react-select-3-input"));
-        birthMonthInput.click();
-        IO.println("Clicked birth month dropdown");
+        // Step 8: select birth month
+        driver.findElement(By.id("react-select-3-input")).click();
         Thread.sleep(1500);
-
-        WebElement birthMonthOption = wait.until(
-                ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'react-select-3-option')]"))
-        );
-        birthMonthOption.click();
-        IO.println("Selected birth month");
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'react-select-3-option')]"))).click();
+        IO.println("selected birth month");
         Thread.sleep(1000);
 
-        // Step 9: Select Birth Year
-        WebElement birthYearInput = driver.findElement(By.id("react-select-4-input"));
-        birthYearInput.click();
-        IO.println("Clicked birth year dropdown");
+        // Step 9: select birth year
+        driver.findElement(By.id("react-select-4-input")).click();
         Thread.sleep(1500);
-
-        WebElement birthYearOption = wait.until(
-                ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'react-select-4-option')]"))
-        );
-        birthYearOption.click();
-        IO.println("Selected birth year");
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'react-select-4-option')]"))).click();
+        IO.println("selected birth year");
         Thread.sleep(1000);
 
-        // Step 10: Select Gender
-        WebElement genderOption = driver.findElement(By.xpath("//div[@id='gender']/div/label[2]/div"));
-        genderOption.click();
-        IO.println("Selected gender: Female");
+        // Step 10: select gender
+        driver.findElement(By.xpath("//div[@id='gender']/div/label[2]/div")).click();
+        IO.println("selected gender");
         Thread.sleep(800);
 
-        // Step 11: Select Nationality
-        WebElement nationalityInput = driver.findElement(By.id("react-select-5-input"));
-        nationalityInput.click();
-        IO.println("Clicked nationality dropdown");
+        // Step 11: select nationality
+        driver.findElement(By.id("react-select-5-input")).click();
         Thread.sleep(1500);
-
-        WebElement nationalityOption = wait.until(
-                ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'react-select-5-option')]"))
-        );
-        nationalityOption.click();
-        IO.println("Selected nationality");
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'react-select-5-option')]"))).click();
+        IO.println("selected nationality");
         Thread.sleep(1000);
 
-        // Step 12: Select Marital Status
-        WebElement maritalStatusOption = driver.findElement(By.xpath("//div[@id='marital-status']/div/label/div"));
-        maritalStatusOption.click();
-        IO.println("Selected marital status");
+        // Step 12: select marital status
+        driver.findElement(By.xpath("//div[@id='marital-status']/div/label/div")).click();
+        IO.println("selected marital status");
         Thread.sleep(800);
 
-        // Step 13: Select something from name dropdown
+        // Step 13: select name dropdown
         WebElement nameDropdownContainer = driver.findElement(By.xpath("//div[@id='name']/div/div[7]/div"));
         WebElement nameInput = nameDropdownContainer.findElement(By.xpath(".//input[contains(@id,'react-select-')]"));
         nameInput.click();
-        IO.println("Clicked name dropdown");
         Thread.sleep(1500);
-
         String nameInputId = nameInput.getAttribute("id").replace("-input", "");
-        WebElement nameOption = wait.until(
-                ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'" + nameInputId + "-option')]"))
-        );
-        nameOption.click();
-        IO.println("Selected name option");
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'" + nameInputId + "-option')]"))).click();
+        IO.println("selected name option");
         Thread.sleep(1000);
 
-        // Step 14: Select Military Status
+        // Step 14: select military status
         WebElement militaryStatusContainer = driver.findElement(By.xpath("//div[@id='military-status']/div"));
         WebElement militaryInput = militaryStatusContainer.findElement(By.xpath(".//input[contains(@id,'react-select-')]"));
         militaryInput.click();
-        IO.println("Clicked military status dropdown");
         Thread.sleep(1500);
-
         String militaryInputId = militaryInput.getAttribute("id").replace("-input", "");
-        WebElement militaryStatusOption = wait.until(
-                ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'" + militaryInputId + "-option')]"))
-        );
-        militaryStatusOption.click();
-        IO.println("Selected military status");
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'" + militaryInputId + "-option')]"))).click();
+        IO.println("selected military status");
         Thread.sleep(1000);
 
-        // Step 15: Select Driving License options
-        WebElement drivingLicenseOption1 = driver.findElement(By.xpath("//div[@id='driving-license']/div/div/label/div"));
-        drivingLicenseOption1.click();
-        IO.println("Selected first driving license option");
+        // Step 15: select driving license
+        driver.findElement(By.xpath("//div[@id='driving-license']/div/div/label/div")).click();
+        Thread.sleep(800);
+        driver.findElement(By.xpath("//div[@id='driving-license']/div[2]/div/label/div")).click();
+        IO.println("selected driving licenses");
         Thread.sleep(800);
 
-        WebElement drivingLicenseOption2 = driver.findElement(By.xpath("//div[@id='driving-license']/div[2]/div/label/div"));
-        drivingLicenseOption2.click();
-        IO.println("Selected second driving license option");
-        Thread.sleep(800);
-
-        // Step 16: Select Location - City
+        // Step 16: select city
         WebElement cityContainer = driver.findElement(By.xpath("//div[@id='location']/div/div"));
         WebElement cityInput = cityContainer.findElement(By.xpath(".//input[contains(@id,'react-select-')]"));
         cityInput.click();
-        IO.println("Clicked city dropdown");
         Thread.sleep(1500);
-
         String cityInputId = cityInput.getAttribute("id").replace("-input", "");
-        WebElement cityOption = wait.until(
-                ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'" + cityInputId + "-option')]"))
-        );
-        cityOption.click();
-        IO.println("Selected city");
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'" + cityInputId + "-option')]"))).click();
+        IO.println("selected city");
         Thread.sleep(1000);
 
-        // Step 17: Select Location
+        // Step 17: select area
         WebElement areaContainer = driver.findElement(By.xpath("//div[@id='location']/div/div[2]"));
         WebElement areaInput = areaContainer.findElement(By.xpath(".//input[contains(@id,'react-select-')]"));
         areaInput.click();
-        IO.println("Clicked area dropdown");
         Thread.sleep(1500);
-
         String areaInputId = areaInput.getAttribute("id").replace("-input", "");
-        WebElement areaOption = wait.until(
-                ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'" + areaInputId + "-option')]"))
-        );
-        areaOption.click();
-        IO.println("Selected area");
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[contains(@id,'" + areaInputId + "-option')]"))).click();
+        IO.println("selected area");
         Thread.sleep(1000);
 
-        // Step 18: Fill in Primary Phone
-        WebElement primaryPhoneField = driver.findElement(By.name("primaryPhone"));
-        primaryPhoneField.click();
-        primaryPhoneField.sendKeys(Keys.CONTROL + "a");
-        primaryPhoneField.sendKeys(Keys.DELETE);
-        primaryPhoneField.sendKeys("01116615352");
-        IO.println("Entered primary phone: 01116615352");
+        // Step 18: fill primary phone
+        driver.findElement(By.name("primaryPhone")).sendKeys(Keys.CONTROL + "a", Keys.DELETE, "01116615352");
+        IO.println("filled primary phone");
         Thread.sleep(500);
 
-        // Step 19: Fill in Other Phone
-        WebElement otherPhoneField = driver.findElement(By.name("otherPhone"));
-        otherPhoneField.click();
-        otherPhoneField.sendKeys(Keys.CONTROL + "a");
-        otherPhoneField.sendKeys(Keys.DELETE);
-        otherPhoneField.sendKeys("01116615352");
-        IO.println("Entered other phone: 01116615352");
+        // Step 19: fill other phone
+        driver.findElement(By.name("otherPhone")).sendKeys(Keys.CONTROL + "a", Keys.DELETE, "01116615352");
+        IO.println("filled other phone");
         Thread.sleep(500);
 
-        // Step 20: Click Save/Submit button
-        WebElement saveButton = driver.findElement(By.xpath("//div[@id='app']/div/div[2]/div[2]/form/button"));
-        saveButton.click();
-        IO.println("Clicked save button");
+        // Step 20: click save
+        driver.findElement(By.xpath("//div[@id='app']/div/div[2]/div[2]/form/button")).click();
+        IO.println("clicked save");
         Thread.sleep(2000);
 
-        // Step 21: Verify success message/modal is present
-        WebElement successModal = wait.until(
-                ExpectedConditions.presenceOfElementLocated(
-                        By.xpath("//div[@id='app']/div/div[5]/div/div/div")
-                )
-        );
+        // Step 21: check success
+        WebElement successModal = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='app']/div/div[5]/div/div/div")));
 
-        // Step 22: Validate the test result
-        if (successModal != null && successModal.isDisplayed()) {
-            IO.println("Test PASSED: Success modal/message is displayed");
-            IO.println("Profile information updated successfully");
+        if (successModal.isDisplayed()) {
+            IO.println("profile updated successfully");
         } else {
-            IO.println("Test FAILED: Success modal is not visible");
-        }
-
-        // Additional verification
-        boolean isSuccessModalPresent = driver.findElements(
-                By.xpath("//div[@id='app']/div/div[5]/div/div/div")
-        ).size() > 0;
-
-        if (isSuccessModalPresent) {
-            IO.println("Success modal element is present in the DOM");
-        } else {
-            IO.println("Success modal element not found");
+            IO.println("Test failed");
         }
 
     } catch (Exception e) {
-        IO.println("Test FAILED with exception: " + e.getMessage());
+        IO.println(e.getMessage());
         e.printStackTrace();
     } finally {
-        // Step 23: Close the browser
-        Thread.sleep(2000);
         driver.close();
         driver.quit();
-        IO.println("Browser closed");
     }
 }
