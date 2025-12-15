@@ -16,6 +16,25 @@ import java.time.Duration;
 public class T8_TCN_DEG_01_Test {
     protected WebDriver driver;
     protected WebDriverWait wait;
+    
+    // Locators
+    private final By profileDropdown = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div");
+    private final By editProfileOption = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div[2]/div/div[4]/a/span");
+    private final By educationTab = By.linkText("Education");
+    private final By addEducationButton = By.xpath("//button[@type='button']");
+    private final By degreeLevelDropdown = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Degree Level'])[1]/following::div[3]");
+    private final By degreeOption1 = By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-1')]");
+    private final By degreeNameField = By.name("degreeDisplayName");
+    private final By countryDropdown = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Country'])[1]/following::div[3]");
+    private final By schoolNameField = By.name("school");
+    private final By fieldOfStudyInput = By.xpath("//label[contains(text(), 'Field')]/parent::div/following-sibling::div//input[@type='text']");
+    private final By startYearDropdown = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Start Year'])[1]/following::div[3]");
+    private final By endYearDropdown = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='End Year'])[1]/following::div[4]");
+    private final By gradeDropdown = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Grade'])[1]/following::div[3]");
+    private final By selectOption = By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-')]");
+    private final By studiedSubjectsField = By.name("studiedSubjects");
+    private final By saveButton = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Cancel'])[1]/following::button[1]");
+    private final By validationError = By.xpath("//*[contains(text(), 'Please add at least 1 studies')]");
 
     @BeforeMethod
     public void setUp() {
@@ -37,21 +56,21 @@ public class T8_TCN_DEG_01_Test {
 
         // Step 2: Navigate to profile
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div")
+                profileDropdown
         )).click();
         Thread.sleep(1500);
 
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div[2]/div/div[4]/a/span")
+                editProfileOption
         )).click();
         Thread.sleep(2000);
 
         // Step 3: Click Education tab
-        wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Education"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(educationTab)).click();
         Thread.sleep(1500);
 
         // Step 4: Click Add Education button
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@type='button']"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(addEducationButton)).click();
         System.out.println("Clicked Add Education button");
         Thread.sleep(2000);
 
@@ -60,14 +79,14 @@ public class T8_TCN_DEG_01_Test {
                 By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Degree Level'])[1]/following::div[3]")
         )).click();
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-1')]")
+                degreeOption1
         )).click();
 
         // Step 6: Fill Degree Name
-        WebElement degreeNameField = wait.until(ExpectedConditions.elementToBeClickable(By.name("degreeDisplayName")));
-        degreeNameField.click();
-        degreeNameField.clear();
-        degreeNameField.sendKeys("MS");
+        WebElement degreeName = wait.until(ExpectedConditions.elementToBeClickable(degreeNameField));
+        degreeName.click();
+        degreeName.clear();
+        degreeName.sendKeys("MS");
         System.out.println("Filled degree name");
 
         // Step 7: Select Country
@@ -75,11 +94,11 @@ public class T8_TCN_DEG_01_Test {
                 By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Country'])[1]/following::div[3]")
         )).click();
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-0')]")
+                selectOption
         )).click();
 
         // Step 8: Fill School
-        WebElement schoolField = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("school")));
+        WebElement schoolField = wait.until(ExpectedConditions.presenceOfElementLocated(schoolNameField));
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true);", schoolField);
         schoolField.click();
@@ -89,10 +108,10 @@ public class T8_TCN_DEG_01_Test {
         Thread.sleep(500);
 
         // Step 9: Scroll to Field of Study but do NOT fill it (negative test)
-        WebElement fieldOfStudyInput = wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.xpath("//label[contains(text(), 'Field')]/parent::div/following-sibling::div//input[@type='text']")
+        WebElement fieldOfStudy = wait.until(ExpectedConditions.presenceOfElementLocated(
+                fieldOfStudyInput
         ));
-        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", fieldOfStudyInput);
+        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", fieldOfStudy);
         Thread.sleep(300);
         System.out.println("Field of Study left empty intentionally");
 
@@ -115,7 +134,7 @@ public class T8_TCN_DEG_01_Test {
         js.executeScript("arguments[0].scrollIntoView({block: 'center'});", endYearDropdown);
         endYearDropdown.click();
         WebElement endYearOption = wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-0')]")
+                selectOption
         ));
         js.executeScript("arguments[0].click();", endYearOption);
         System.out.println("Selected End Year");
@@ -127,7 +146,7 @@ public class T8_TCN_DEG_01_Test {
         js.executeScript("arguments[0].scrollIntoView({block: 'center'});", gradeDropdown);
         gradeDropdown.click();
         WebElement gradeOption = wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-0')]")
+                selectOption
         ));
         js.executeScript("arguments[0].click();", gradeOption);
         System.out.println("Selected Grade");

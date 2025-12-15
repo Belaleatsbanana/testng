@@ -15,6 +15,18 @@ import java.time.Duration;
 public class T11_TCN_TRAIN_01_Test {
     protected WebDriver driver;
     protected WebDriverWait wait;
+    
+    // Locators
+    private final By profileDropdown = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div");
+    private final By editProfileOption = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div[2]/div/div[4]/a/span");
+    private final By educationTab = By.linkText("Education");
+    private final By addTrainingButton = By.xpath("//button[@type='button']");
+    private final By titleField = By.name("trainingTitle");
+    private final By startMonthDropdown = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Month'])[1]/following::div[3]");
+    private final By startYearDropdown = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Year'])[1]/following::div[4]");
+    private final By monthYearOption = By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-')]");
+    private final By descriptionField = By.name("trainingDescription");
+    private final By saveButton = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Cancel'])[1]/following::button[1]");
 
     @BeforeMethod
     public void setUp() {
@@ -36,34 +48,34 @@ public class T11_TCN_TRAIN_01_Test {
 
         // Step 2: Navigate to profile
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div")
+                profileDropdown
         )).click();
         Thread.sleep(1000);
 
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div[2]/div/div[4]/a/span")
+                editProfileOption
         )).click();
         System.out.println("Navigated to profile page");
         Thread.sleep(2000);
 
         // Step 3: Click Education tab
-        wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Education"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(educationTab)).click();
         System.out.println("Clicked Education tab");
         Thread.sleep(1500);
 
         // Step 4: Click Add Training/Certification button
-        WebElement addTrainingButton = wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[@id='app']/div/div[2]/div[2]/div[5]/button")
+        WebElement addTraining = wait.until(ExpectedConditions.elementToBeClickable(
+                addTrainingButton
         ));
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", addTrainingButton);
-        addTrainingButton.click();
+        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", addTraining);
+        addTraining.click();
         System.out.println("Clicked Add Training button");
         Thread.sleep(2000);
 
         // Step 5: Fill Title only
-        WebElement titleField = wait.until(ExpectedConditions.elementToBeClickable(By.name("title")));
-        titleField.sendKeys("SQA");
+        WebElement title = wait.until(ExpectedConditions.elementToBeClickable(titleField));
+        title.sendKeys("SQA");
         System.out.println("Filled title");
         Thread.sleep(500);
 
@@ -78,7 +90,7 @@ public class T11_TCN_TRAIN_01_Test {
         Thread.sleep(500);
 
         WebElement monthOption = wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-0')]")
+                monthYearOption
         ));
         js.executeScript("arguments[0].click();", monthOption);
         System.out.println("Selected Start Month");
@@ -92,15 +104,15 @@ public class T11_TCN_TRAIN_01_Test {
         Thread.sleep(500);
 
         WebElement yearOption = wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-0')]")
+                monthYearOption
         ));
         js.executeScript("arguments[0].click();", yearOption);
         System.out.println("Selected Start Year");
         Thread.sleep(500);
 
         // Step 9: Fill Description
-        WebElement descriptionField = wait.until(ExpectedConditions.elementToBeClickable(By.name("description")));
-        descriptionField.sendKeys("SQA");
+        WebElement description = wait.until(ExpectedConditions.elementToBeClickable(descriptionField));
+        description.sendKeys("SQA");
         System.out.println("Filled description");
         Thread.sleep(500);
 

@@ -16,6 +16,27 @@ import java.time.Duration;
 public class T7_TCP_DEG_01_Test {
     protected WebDriver driver;
     protected WebDriverWait wait;
+    
+    // Locators
+    private final By profileDropdown = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div");
+    private final By editProfileOption = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div[2]/div/div[4]/a/span");
+    private final By educationTab = By.linkText("Education");
+    private final By addEducationButton = By.xpath("//button[@type='button']");
+    private final By degreeLevelControl = By.xpath("//div[@data-field='educationalDegree']//div[contains(@class, 'css-5usvjy-control') or contains(@class, 'control')]");
+    private final By degreeOption1 = By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-1')]");
+    private final By degreeNameField = By.name("degreeDisplayName");
+    private final By countryControl = By.xpath("//label[contains(text(), 'Country')]/following-sibling::div//div[contains(@class, 'control')]");
+    private final By schoolNameField = By.name("school");
+    private final By fieldOfStudyInput = By.xpath("//label[contains(text(), 'Field')]/parent::div/following-sibling::div//input[@type='text']");
+    private final By startYearControl = By.xpath("//label[contains(text(), 'Start Year')]/following-sibling::div//div[contains(@class, 'control')]");
+    private final By endYearControl = By.xpath("//label[contains(text(), 'End Year')]/following-sibling::div//div[contains(@class, 'control')]");
+    private final By gradeControl = By.xpath("//label[contains(text(), 'Grade')]/following-sibling::div//div[contains(@class, 'control')]");
+    private final By selectOption = By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-')]");
+    private final By selectMenuClose = By.xpath("//div[contains(@id, 'react-select') and contains(@class, 'menu')]");
+    private final By studiedSubjectsField = By.name("studiedSubjects");
+    private final By notesField = By.name("notes");
+    private final By saveButton = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Cancel'])[1]/following::button[1]");
+    private final By successModal = By.xpath("/html/body/div[1]/div/div[4]/div/div");
 
     @BeforeMethod
     public void setUp() {
@@ -37,72 +58,72 @@ public class T7_TCP_DEG_01_Test {
 
         // Step 2: Navigate to profile
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div")
+                profileDropdown
         )).click();
         Thread.sleep(1500);
 
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div[2]/div/div[4]/a/span")
+                editProfileOption
         )).click();
         System.out.println("Navigated to profile page");
         Thread.sleep(2000);
 
         // Step 3: Click Education tab
-        wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Education"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(educationTab)).click();
         System.out.println("Clicked Education tab");
         Thread.sleep(1500);
 
         // Step 4: Click Add Education button
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@type='button']"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(addEducationButton)).click();
         System.out.println("Clicked Add Education button");
         Thread.sleep(2000);
 
         // Step 5: Select Degree Level
-        WebElement degreeLevelControl = wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[@data-field='educationalDegree']//div[contains(@class, 'css-5usvjy-control') or contains(@class, 'control')]")
+        WebElement degreeLevel = wait.until(ExpectedConditions.elementToBeClickable(
+                degreeLevelControl
         ));
-        degreeLevelControl.click();
+        degreeLevel.click();
         Thread.sleep(1000);
 
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-1')]")
+                degreeOption1
         )).click();
         System.out.println("Selected Degree Level");
         Thread.sleep(500);
 
         // Wait for dropdown to close
         wait.until(ExpectedConditions.invisibilityOfElementLocated(
-                By.xpath("//div[contains(@id, 'react-select') and contains(@class, 'menu')]")
+                selectMenuClose
         ));
         Thread.sleep(500);
 
         // Step 6: Fill Degree Display Name
-        WebElement degreeNameField = driver.findElement(By.name("degreeDisplayName"));
-        degreeNameField.click();
-        degreeNameField.clear();
-        degreeNameField.sendKeys("MS");
+        WebElement degreeName = driver.findElement(degreeNameField);
+        degreeName.click();
+        degreeName.clear();
+        degreeName.sendKeys("MS");
         System.out.println("Filled degree name");
         Thread.sleep(500);
 
         // Step 7: Select Country
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//label[contains(text(), 'Country')]/following-sibling::div//div[contains(@class, 'control')]")
+                countryControl
         )).click();
         Thread.sleep(1000);
 
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-')]")
+                selectOption
         )).click();
         System.out.println("Selected Country");
         Thread.sleep(1000);
 
         wait.until(ExpectedConditions.invisibilityOfElementLocated(
-                By.xpath("//div[contains(@id, 'react-select') and contains(@class, 'menu')]")
+                selectMenuClose
         ));
         Thread.sleep(500);
 
         // Step 8: Fill School/University name
-        WebElement schoolField = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("school")));
+        WebElement schoolField = wait.until(ExpectedConditions.presenceOfElementLocated(schoolNameField));
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true);", schoolField);
         Thread.sleep(300);
@@ -116,98 +137,98 @@ public class T7_TCP_DEG_01_Test {
         Thread.sleep(500);
 
         // Step 9: Fill Field of Study
-        WebElement fieldOfStudyInput = wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.xpath("//label[contains(text(), 'Field')]/parent::div/following-sibling::div//input[@type='text']")
+        WebElement fieldOfStudy = wait.until(ExpectedConditions.presenceOfElementLocated(
+                fieldOfStudyInput
         ));
-        js.executeScript("arguments[0].scrollIntoView(true);", fieldOfStudyInput);
+        js.executeScript("arguments[0].scrollIntoView(true);", fieldOfStudy);
         Thread.sleep(300);
-        fieldOfStudyInput.click();
-        fieldOfStudyInput.sendKeys("BUE");
+        fieldOfStudy.click();
+        fieldOfStudy.sendKeys("BUE");
         System.out.println("Filled field of study");
         Thread.sleep(1000);
 
-        fieldOfStudyInput.sendKeys(Keys.TAB);
+        fieldOfStudy.sendKeys(Keys.TAB);
         Thread.sleep(2000);
 
         // Step 10: Select Start Year
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//label[contains(text(), 'Start Year')]/following-sibling::div//div[contains(@class, 'control')]")
+                startYearControl
         )).click();
         Thread.sleep(1000);
 
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-')]")
+                selectOption
         )).click();
         System.out.println("Selected Start Year");
 
         wait.until(ExpectedConditions.invisibilityOfElementLocated(
-                By.xpath("//div[contains(@id, 'react-select') and contains(@class, 'menu')]")
+                selectMenuClose
         ));
         Thread.sleep(500);
 
         // Step 11: Select End Year
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//label[contains(text(), 'End Year')]/following-sibling::div//div[contains(@class, 'control')]")
+                endYearControl
         )).click();
         Thread.sleep(1000);
 
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-')]")
+                selectOption
         )).click();
         System.out.println("Selected End Year");
 
         wait.until(ExpectedConditions.invisibilityOfElementLocated(
-                By.xpath("//div[contains(@id, 'react-select') and contains(@class, 'menu')]")
+                selectMenuClose
         ));
         Thread.sleep(500);
 
         // Step 12: Select Grade
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//label[contains(text(), 'Grade')]/following-sibling::div//div[contains(@class, 'control')]")
+                gradeControl
         )).click();
         Thread.sleep(1000);
 
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-')]")
+                selectOption
         )).click();
         System.out.println("Selected Grade");
 
         wait.until(ExpectedConditions.invisibilityOfElementLocated(
-                By.xpath("//div[contains(@id, 'react-select') and contains(@class, 'menu')]")
+                selectMenuClose
         ));
         Thread.sleep(500);
 
         // Step 13: Fill Studied Subjects
-        WebElement studiedSubjectsField = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("studiedSubjects")));
-        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", studiedSubjectsField);
+        WebElement studiedSubjects = wait.until(ExpectedConditions.presenceOfElementLocated(studiedSubjectsField));
+        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", studiedSubjects);
         Thread.sleep(500);
 
         try {
-            wait.until(ExpectedConditions.elementToBeClickable(studiedSubjectsField));
-            studiedSubjectsField.click();
+            wait.until(ExpectedConditions.elementToBeClickable(studiedSubjects));
+            studiedSubjects.click();
         } catch (Exception e) {
-            js.executeScript("arguments[0].click();", studiedSubjectsField);
+            js.executeScript("arguments[0].click();", studiedSubjects);
         }
 
-        studiedSubjectsField.clear();
-        studiedSubjectsField.sendKeys("SQA");
+        studiedSubjects.clear();
+        studiedSubjects.sendKeys("SQA");
         System.out.println("Filled studied subjects");
         Thread.sleep(500);
 
         // Step 14: Fill Notes
-        WebElement notesField = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("notes")));
-        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", notesField);
+        WebElement notes = wait.until(ExpectedConditions.presenceOfElementLocated(notesField));
+        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", notes);
         Thread.sleep(500);
 
         try {
-            wait.until(ExpectedConditions.elementToBeClickable(notesField));
-            notesField.click();
+            wait.until(ExpectedConditions.elementToBeClickable(notes));
+            notes.click();
         } catch (Exception e) {
-            js.executeScript("arguments[0].click();", notesField);
+            js.executeScript("arguments[0].click();", notes);
         }
 
-        notesField.clear();
-        notesField.sendKeys("SQA");
+        notes.clear();
+        notes.sendKeys("SQA");
         System.out.println("Filled notes");
         Thread.sleep(500);
 
@@ -224,11 +245,11 @@ public class T7_TCP_DEG_01_Test {
 
     @AfterMethod
     public void tearDown() {
-        WebElement successModal = wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.xpath("/html/body/div[1]/div/div[4]/div/div")
+        WebElement success = wait.until(ExpectedConditions.presenceOfElementLocated(
+                successModal
         ));
 
-        if (successModal.isDisplayed()) {
+        if (success.isDisplayed()) {
             System.out.println("education added successfully");
         } else {
             System.out.println("test failed");

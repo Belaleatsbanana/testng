@@ -15,6 +15,34 @@ import java.time.Duration;
 public class T6_TCN_PF_01_Test {
     protected WebDriver driver;
     protected WebDriverWait wait;
+    
+    // Locators
+    private final By profileDropdown = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div");
+    private final By editProfileOption = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div[2]/div/div[4]/a/span");
+    private final By firstNameField = By.name("firstName");
+    private final By middleNameField = By.name("middleName");
+    private final By lastNameField = By.name("lastName");
+    private final By birthDayInput = By.id("react-select-2-input");
+    private final By birthDayOption = By.xpath("//div[contains(@id,'react-select-2-option')]");
+    private final By birthMonthInput = By.id("react-select-3-input");
+    private final By birthMonthOption = By.xpath("//div[contains(@id,'react-select-3-option')]");
+    private final By birthYearInput = By.id("react-select-4-input");
+    private final By birthYearOption = By.xpath("//div[contains(@id,'react-select-4-option')]");
+    private final By genderOption = By.xpath("//div[@id='gender']/div/label[2]/div");
+    private final By nationalityInput = By.id("react-select-5-input");
+    private final By nationalityOption = By.xpath("//div[contains(@id,'react-select-5-option')]");
+    private final By maritalStatusOption = By.xpath("//div[@id='marital-status']/div/label/div");
+    private final By nameDropdownContainer = By.xpath("//div[@id='name']/div/div[7]/div");
+    private final By militaryStatusContainer = By.xpath("//div[@id='military-status']/div");
+    private final By drivingLicense1 = By.xpath("//div[@id='driving-license']/div/div/label/div");
+    private final By drivingLicense2 = By.xpath("//div[@id='driving-license']/div[2]/div/label/div");
+    private final By cityContainer = By.xpath("//div[@id='location']/div/div");
+    private final By areaContainer = By.xpath("//div[@id='location']/div/div[2]");
+    private final By primaryPhoneField = By.name("primaryPhone");
+    private final By otherPhoneField = By.name("otherPhone");
+    private final By saveButton = By.xpath("//div[@id='app']/div/div[2]/div[2]/form/button");
+    private final By validationError = By.xpath("//div[@id='contact-info']/div[2]/div/span");
+    private final By dynamicReactSelectInput = By.xpath(".//input[contains(@id,'react-select-')]");
 
     @BeforeMethod
     public void setUp() {
@@ -36,42 +64,42 @@ public class T6_TCN_PF_01_Test {
 
         // Step 2: Navigate to profile
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div")
+                profileDropdown
         )).click();
         System.out.println("Clicked profile dropdown");
         Thread.sleep(1500);
 
         wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div[2]/div/div[4]/a/span")
+                editProfileOption
         )).click();
         System.out.println("Navigated to profile page");
         Thread.sleep(2000);
 
         // Step 3: Fill personal information
-        WebElement firstNameField = wait.until(ExpectedConditions.elementToBeClickable(By.name("firstName")));
-        firstNameField.click();
+        WebElement firstNameFld = wait.until(ExpectedConditions.elementToBeClickable(firstNameField));
+        firstNameFld.click();
         Thread.sleep(200);
-        firstNameField.sendKeys(Keys.CONTROL + "a");
-        firstNameField.sendKeys(Keys.BACK_SPACE);
-        firstNameField.sendKeys("dummy");
+        firstNameFld.sendKeys(Keys.CONTROL + "a");
+        firstNameFld.sendKeys(Keys.BACK_SPACE);
+        firstNameFld.sendKeys("dummy");
         System.out.println("Filled first name");
         Thread.sleep(500);
 
-        WebElement middleNameField = driver.findElement(By.name("middleName"));
-        middleNameField.click();
+        WebElement middleNameFld = driver.findElement(middleNameField);
+        middleNameFld.click();
         Thread.sleep(200);
-        middleNameField.sendKeys(Keys.CONTROL + "a");
-        middleNameField.sendKeys(Keys.BACK_SPACE);
-        middleNameField.sendKeys("shams");
+        middleNameFld.sendKeys(Keys.CONTROL + "a");
+        middleNameFld.sendKeys(Keys.BACK_SPACE);
+        middleNameFld.sendKeys("shams");
         System.out.println("Filled middle name");
         Thread.sleep(500);
 
-        WebElement lastNameField = driver.findElement(By.name("lastName"));
-        lastNameField.click();
+        WebElement lastNameFld = driver.findElement(lastNameField);
+        lastNameFld.click();
         Thread.sleep(200);
-        lastNameField.sendKeys(Keys.CONTROL + "a");
-        lastNameField.sendKeys(Keys.BACK_SPACE);
-        lastNameField.sendKeys("bell");
+        lastNameFld.sendKeys(Keys.CONTROL + "a");
+        lastNameFld.sendKeys(Keys.BACK_SPACE);
+        lastNameFld.sendKeys("bell");
         System.out.println("Filled last name");
         Thread.sleep(500);
 
@@ -112,8 +140,8 @@ public class T6_TCN_PF_01_Test {
         Thread.sleep(800);
 
         // Step 6: Select additional fields
-        WebElement nameDropdownContainer = driver.findElement(By.xpath("//div[@id='name']/div/div[7]/div"));
-        WebElement nameInput = nameDropdownContainer.findElement(By.xpath(".//input[contains(@id,'react-select-')]"));
+        WebElement nameDropdownCont = driver.findElement(nameDropdownContainer);
+        WebElement nameInput = nameDropdownCont.findElement(dynamicReactSelectInput);
         nameInput.click();
         Thread.sleep(1500);
         String nameInputId = nameInput.getAttribute("id").replace("-input", "");
@@ -122,8 +150,8 @@ public class T6_TCN_PF_01_Test {
         )).click();
         Thread.sleep(1000);
 
-        WebElement militaryStatusContainer = driver.findElement(By.xpath("//div[@id='military-status']/div"));
-        WebElement militaryInput = militaryStatusContainer.findElement(By.xpath(".//input[contains(@id,'react-select-')]"));
+        WebElement militaryStatusCont = driver.findElement(militaryStatusContainer);
+        WebElement militaryInput = militaryStatusCont.findElement(dynamicReactSelectInput);
         militaryInput.click();
         Thread.sleep(1500);
         String militaryInputId = militaryInput.getAttribute("id").replace("-input", "");
@@ -132,13 +160,13 @@ public class T6_TCN_PF_01_Test {
         )).click();
         Thread.sleep(1000);
 
-        driver.findElement(By.xpath("//div[@id='driving-license']/div/div/label/div")).click();
+        driver.findElement(drivingLicense1).click();
         Thread.sleep(800);
-        driver.findElement(By.xpath("//div[@id='driving-license']/div[2]/div/label/div")).click();
+        driver.findElement(drivingLicense2).click();
         Thread.sleep(800);
 
-        WebElement cityContainer = driver.findElement(By.xpath("//div[@id='location']/div/div"));
-        WebElement cityInput = cityContainer.findElement(By.xpath(".//input[contains(@id,'react-select-')]"));
+        WebElement cityCont = driver.findElement(cityContainer);
+        WebElement cityInput = cityCont.findElement(dynamicReactSelectInput);
         cityInput.click();
         Thread.sleep(1500);
         String cityInputId = cityInput.getAttribute("id").replace("-input", "");
@@ -147,8 +175,8 @@ public class T6_TCN_PF_01_Test {
         )).click();
         Thread.sleep(1000);
 
-        WebElement areaContainer = driver.findElement(By.xpath("//div[@id='location']/div/div[2]"));
-        WebElement areaInput = areaContainer.findElement(By.xpath(".//input[contains(@id,'react-select-')]"));
+        WebElement areaCont = driver.findElement(areaContainer);
+        WebElement areaInput = areaCont.findElement(dynamicReactSelectInput);
         areaInput.click();
         Thread.sleep(1500);
         String areaInputId = areaInput.getAttribute("id").replace("-input", "");
@@ -158,25 +186,25 @@ public class T6_TCN_PF_01_Test {
         Thread.sleep(1000);
 
         // Step 7: Fill primary phone but leave other phone blank
-        WebElement primaryPhoneField = driver.findElement(By.name("primaryPhone"));
-        primaryPhoneField.click();
+        WebElement primaryPhoneFld = driver.findElement(primaryPhoneField);
+        primaryPhoneFld.click();
         Thread.sleep(200);
-        primaryPhoneField.sendKeys(Keys.CONTROL + "a");
-        primaryPhoneField.sendKeys(Keys.BACK_SPACE);
-        primaryPhoneField.sendKeys("01116615352");
+        primaryPhoneFld.sendKeys(Keys.CONTROL + "a");
+        primaryPhoneFld.sendKeys(Keys.BACK_SPACE);
+        primaryPhoneFld.sendKeys("01116615352");
         System.out.println("Filled primary phone");
         Thread.sleep(500);
 
-        WebElement otherPhoneField = driver.findElement(By.name("otherPhone"));
-        otherPhoneField.click();
+        WebElement otherPhoneFld = driver.findElement(otherPhoneField);
+        otherPhoneFld.click();
         Thread.sleep(200);
-        otherPhoneField.sendKeys(Keys.CONTROL + "a");
-        otherPhoneField.sendKeys(Keys.BACK_SPACE);
+        otherPhoneFld.sendKeys(Keys.CONTROL + "a");
+        otherPhoneFld.sendKeys(Keys.BACK_SPACE);
         System.out.println("Left other phone field blank");
         Thread.sleep(500);
 
         // Step 8: Click save
-        driver.findElement(By.xpath("//div[@id='app']/div/div[2]/div[2]/form/button")).click();
+        driver.findElement(saveButton).click();
         System.out.println("Clicked save button");
         Thread.sleep(2000);
 
@@ -186,14 +214,12 @@ public class T6_TCN_PF_01_Test {
     @AfterMethod
     public void tearDown() {
         // Step 9: Verify validation error appears
-        WebElement validationError = wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.xpath("//div[@id='contact-info']/div[2]/div/span")
-        ));
+        WebElement validationErr = wait.until(ExpectedConditions.presenceOfElementLocated(validationError));
 
         String expectedErrorMessage = "This is a required field";
-        String actualErrorMessage = validationError.getText();
+        String actualErrorMessage = validationErr.getText();
 
-        if (validationError.isDisplayed() && actualErrorMessage.equals(expectedErrorMessage)) {
+        if (validationErr.isDisplayed() && actualErrorMessage.equals(expectedErrorMessage)) {
             System.out.println("validation error showed");
         } else {
             System.out.println("test failed");

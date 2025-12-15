@@ -16,6 +16,14 @@ import java.util.List;
 public class T12_TCP_TRAIN_02_Test {
     protected WebDriver driver;
     protected WebDriverWait wait;
+    
+    // Locators
+    private final By profileDropdown = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div");
+    private final By editProfileOption = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div[2]/div/div[4]/a/span");
+    private final By educationTab = By.linkText("Education");
+    private final By deleteButton = By.xpath("/html/body/div[1]/div/div[2]/div[2]/div[5]/ul/li/div[1]/div");
+    private final By confirmDeleteButton = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Cancel'])[1]/following::button[1]");
+    private final By remainingTrainingItems = By.xpath("//div[@id='app']/div/div[2]/div[2]/div[5]/ul/li");
 
     @BeforeMethod
     public void setUp() {
@@ -36,41 +44,33 @@ public class T12_TCP_TRAIN_02_Test {
         Thread.sleep(2000);
 
         // Step 2: Navigate to profile
-        wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div")
-        )).click();
+        wait.until(ExpectedConditions.elementToBeClickable(profileDropdown)).click();
         Thread.sleep(1000);
 
-        wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div[2]/div/div[4]/a/span")
-        )).click();
+        wait.until(ExpectedConditions.elementToBeClickable(editProfileOption)).click();
         System.out.println("Navigated to profile page");
         Thread.sleep(2000);
 
         // Step 3: Click Education tab
-        wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Education"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(educationTab)).click();
         System.out.println("Clicked Education tab");
         Thread.sleep(2000);
 
         // Step 4: Click delete button for training/certification
-        String deleteButtonXpath = "/html/body/div[1]/div/div[2]/div[2]/div[5]/ul/li/div[1]/div";
-
-        WebElement deleteButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(deleteButtonXpath)));
+        WebElement deleteBtn = wait.until(ExpectedConditions.elementToBeClickable(deleteButton));
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", deleteButton);
+        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", deleteBtn);
         System.out.println("Scrolled to delete button");
         Thread.sleep(500);
 
-        deleteButton.click();
+        deleteBtn.click();
         System.out.println("Clicked delete button");
         Thread.sleep(1000);
 
         // Step 5: Confirm deletion
-        WebElement confirmDeleteButton = wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Cancel'])[1]/following::button[1]")
-        ));
-        confirmDeleteButton.click();
+        WebElement confirmBtn = wait.until(ExpectedConditions.elementToBeClickable(confirmDeleteButton));
+        confirmBtn.click();
         System.out.println("Confirmed deletion");
         Thread.sleep(2000);
 
@@ -79,8 +79,7 @@ public class T12_TCP_TRAIN_02_Test {
 
     @AfterMethod
     public void tearDown() {
-        String assertionXpath = "//div[@id='app']/div/div[2]/div[2]/div[5]/ul/li";
-        List<WebElement> remainingTrainings = driver.findElements(By.xpath(assertionXpath));
+        List<WebElement> remainingTrainings = driver.findElements(remainingTrainingItems);
 
         if (remainingTrainings.isEmpty()) {
             System.out.println("training deleted");

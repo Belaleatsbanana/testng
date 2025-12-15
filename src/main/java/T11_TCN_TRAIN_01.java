@@ -7,6 +7,18 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 void main() throws InterruptedException {
+    // Locators
+    By profileDropdown = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div");
+    By editProfileOption = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div[2]/div/div[4]/a/span");
+    By educationTab = By.linkText("Education");
+    By addTrainingButton = By.xpath("//div[@id='app']/div/div[2]/div[2]/div[5]/button");
+    By titleField = By.name("title");
+    By startMonthDropdown = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Month'])[1]/following::div[3]");
+    By startYearDropdown = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Year'])[1]/following::div[4]");
+    By monthYearOption = By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-0')]");
+    By descriptionField = By.name("description");
+    By saveButton = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Cancel'])[1]/following::button[1]");
+    
     System.setProperty("webdriver.chrome.driver", "/home/fax/Downloads/chromedriver-linux64/chromedriver");
 
     ChromeOptions option = new ChromeOptions();
@@ -25,54 +37,54 @@ void main() throws InterruptedException {
         Thread.sleep(2000);
 
         // Step 2: click on profile
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(profileDropdown)).click();
         Thread.sleep(1000);
         
         // Step 3: go to profile page
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div[2]/div/div[4]/a/span"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(editProfileOption)).click();
         IO.println("went to profile");
         Thread.sleep(2000);
 
         // Step 4: click education tab
-        wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Education"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(educationTab)).click();
         IO.println("clicked education");
         Thread.sleep(1500);
 
         // Step 5: click add training button
-        WebElement addTrainingButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='app']/div/div[2]/div[2]/div[5]/button")));
-        driver.executeScript("arguments[0].scrollIntoView({block: 'center'});", addTrainingButton);
-        addTrainingButton.click();
+        WebElement addTrainingBtn = wait.until(ExpectedConditions.elementToBeClickable(addTrainingButton));
+        driver.executeScript("arguments[0].scrollIntoView({block: 'center'});", addTrainingBtn);
+        addTrainingBtn.click();
         IO.println("clicked add training");
         Thread.sleep(2000);
 
         // Step 6: fill title
-        wait.until(ExpectedConditions.elementToBeClickable(By.name("title"))).sendKeys("SQA");
+        wait.until(ExpectedConditions.elementToBeClickable(titleField)).sendKeys("SQA");
         IO.println("filled title");
         Thread.sleep(500);
 
         // Step 7: select start month
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Month'])[1]/following::div[3]"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(startMonthDropdown)).click();
         Thread.sleep(500);
-        WebElement monthOption = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-0')]")));
+        WebElement monthOption = wait.until(ExpectedConditions.presenceOfElementLocated(monthYearOption));
         driver.executeScript("arguments[0].click();", monthOption);
         IO.println("selected month");
         Thread.sleep(500);
 
         // Step 8: select start year
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Year'])[1]/following::div[4]"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(startYearDropdown)).click();
         Thread.sleep(500);
-        WebElement yearOption = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-0')]")));
+        WebElement yearOption = wait.until(ExpectedConditions.presenceOfElementLocated(monthYearOption));
         driver.executeScript("arguments[0].click();", yearOption);
         IO.println("selected year");
         Thread.sleep(500);
 
         // Step 9: fill description
-        wait.until(ExpectedConditions.elementToBeClickable(By.name("description"))).sendKeys("SQA");
+        wait.until(ExpectedConditions.elementToBeClickable(descriptionField)).sendKeys("SQA");
         IO.println("filled description");
         Thread.sleep(500);
 
         // Step 10: click save
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Cancel'])[1]/following::button[1]"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(saveButton)).click();
         IO.println("clicked save");
         Thread.sleep(1500);
 
