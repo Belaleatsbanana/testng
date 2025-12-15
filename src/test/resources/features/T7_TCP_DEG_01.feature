@@ -1,6 +1,6 @@
-Feature: Add education successfully
+Feature: feature to test add education functionality
 
-  Scenario: Check education is added successfully with valid information
+  Scenario: check education is added successfully
     Given user is logged in to wuzzuf
     When user clicks on edit profile
     And user clicks on Education tab

@@ -6,6 +6,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import java.util.List;
 
 public class EducationSteps {
     
@@ -228,12 +229,27 @@ public class EducationSteps {
 
     @Then("education is deleted successfully")
     public void education_is_deleted_successfully() {
-        System.out.println("education deleted successfully");
+        List<WebElement> targetItem = TestContext.driver.findElements(By.xpath("/html/body/div[1]/div/div[2]/div[2]/div[2]/ul/li[2]"));
+        
+        if (targetItem.isEmpty()) {
+            System.out.println("education deleted successfully");
+        } else {
+            System.out.println("test failed");
+        }
     }
     
     @Then("validation error for field of study is displayed")
     public void validation_error_for_field_of_study_is_displayed() throws InterruptedException {
-        Thread.sleep(2000);
-        System.out.println("field of study validation error displayed");
+        WebElement errorMessage = TestContext.wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//*[contains(text(), 'Please add at least 1 studies')]")
+        ));
+
+        String actualErrorMessage = errorMessage.getText();
+
+        if (actualErrorMessage.contains("Please add at least")) {
+            System.out.println("validation error showed");
+        } else {
+            System.out.println("test failed");
+        }
     }
 }

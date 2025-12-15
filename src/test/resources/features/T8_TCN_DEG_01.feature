@@ -1,6 +1,6 @@
-Feature: Validate field of study on education form
+Feature: feature to verify field of study is required when adding education
 
-  Scenario: Check validation error when field of study is missing
+  Scenario: check validation error when field of study is missing
     Given user is logged in to wuzzuf
     When user clicks on edit profile
     And user clicks on Education tab

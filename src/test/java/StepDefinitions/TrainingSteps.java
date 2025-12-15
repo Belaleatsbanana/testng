@@ -112,12 +112,29 @@ public class TrainingSteps {
     @Then("training is added successfully")
     public void training_is_added_successfully() throws InterruptedException {
         Thread.sleep(2000);
-        System.out.println("training added successfully");
+        
+        By successModal = By.xpath("/html/body/div[1]/div/div[4]/div/div");
+        WebElement successElement = TestContext.wait.until(ExpectedConditions.visibilityOfElementLocated(successModal));
+
+        if (successElement.isDisplayed()) {
+            System.out.println("training added");
+        } else {
+            System.out.println("test failed");
+        }
     }
 
     @Then("training is deleted successfully")
-    public void training_is_deleted_successfully() {
-        System.out.println("training deleted successfully");
+    public void training_is_deleted_successfully() throws InterruptedException {
+        Thread.sleep(2000);
+        
+        By successModal = By.xpath("/html/body/div[1]/div/div[4]/div/div");
+        WebElement successElement = TestContext.wait.until(ExpectedConditions.visibilityOfElementLocated(successModal));
+
+        if (successElement.isDisplayed()) {
+            System.out.println("training deleted");
+        } else {
+            System.out.println("test failed");
+        }
     }
     
     @Then("validation error for organization is displayed")

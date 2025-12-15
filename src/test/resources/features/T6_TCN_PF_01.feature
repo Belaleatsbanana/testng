@@ -1,6 +1,6 @@
-Feature: Validate alternate phone field on profile
+Feature: feature to validate alternate phone field is required
 
-  Scenario: Check validation error when alternate phone field is left blank
+  Scenario: check validation error when alternate phone field is left blank
     Given user is logged in to wuzzuf
     When user clicks on edit profile
     And user fills personal information
