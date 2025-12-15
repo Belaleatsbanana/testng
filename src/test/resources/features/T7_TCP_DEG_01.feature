@@ -1,8 +1,8 @@
 Feature: Add education successfully
 
   Scenario: Check education is added successfully with valid information
-    Given user is logged in to Wuzzuf
-    When user navigates to profile page
+    Given user is logged in to wuzzuf
+    When user clicks on edit profile
     And user clicks on Education tab
     And user clicks Add Education button
     And user selects degree level

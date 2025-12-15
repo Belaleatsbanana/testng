@@ -1,17 +1,14 @@
 package StepDefinitions;
 
-import utils.WuzzufLogin;
 import io.cucumber.java.en.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class T5_TCP_PF_01_Steps {
+public class ProfileSteps {
     
     // Locators
-    private final By profileDropdown = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div");
-    private final By editProfileOption = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div[2]/div/div[4]/a/span");
     private final By firstNameField = By.name("firstName");
     private final By middleNameField = By.name("middleName");
     private final By lastNameField = By.name("lastName");
@@ -35,17 +32,7 @@ public class T5_TCP_PF_01_Steps {
     private final By otherPhoneField = By.name("otherPhone");
     private final By saveButton = By.xpath("//div[@id='app']/div/div[2]/div[2]/form/button");
     private final By successModal = By.xpath("/html/body/div[1]/div/div[4]/div/div/div");
-
-    @When("user clicks on edit profile")
-    public void user_clicks_on_edit_profile() throws InterruptedException {
-        TestContext.wait.until(ExpectedConditions.elementToBeClickable(profileDropdown)).click();
-        System.out.println("Clicked profile dropdown");
-        Thread.sleep(1500);
-
-        TestContext.wait.until(ExpectedConditions.elementToBeClickable(editProfileOption)).click();
-        System.out.println("Navigated to profile page");
-        Thread.sleep(2000);
-    }
+    private final By alternatePhoneError = By.xpath("//div[@id='contact-info']/div[2]/div/span");
 
     @And("user fills personal information")
     public void user_fills_personal_information() throws InterruptedException {
@@ -186,6 +173,26 @@ public class T5_TCP_PF_01_Steps {
         System.out.println("Filled other phone");
         Thread.sleep(500);
     }
+    
+    @And("user fills primary phone but leaves alternate phone blank")
+    public void user_fills_primary_phone_but_leaves_alternate_phone_blank() throws InterruptedException {
+        WebElement primaryPhone = TestContext.driver.findElement(primaryPhoneField);
+        primaryPhone.click();
+        Thread.sleep(200);
+        primaryPhone.sendKeys(Keys.CONTROL + "a");
+        primaryPhone.sendKeys(Keys.BACK_SPACE);
+        primaryPhone.sendKeys("01116615352");
+        System.out.println("Filled primary phone");
+        Thread.sleep(500);
+
+        WebElement otherPhone = TestContext.driver.findElement(otherPhoneField);
+        otherPhone.click();
+        Thread.sleep(200);
+        otherPhone.sendKeys(Keys.CONTROL + "a");
+        otherPhone.sendKeys(Keys.BACK_SPACE);
+        System.out.println("Left alternate phone blank");
+        Thread.sleep(500);
+    }
 
     @And("clicks save profile button")
     public void clicks_save_profile_button() throws InterruptedException {
@@ -200,6 +207,20 @@ public class T5_TCP_PF_01_Steps {
 
         if (success.isDisplayed()) {
             System.out.println("profile updated successfully");
+        } else {
+            System.out.println("test failed");
+        }
+    }
+    
+    @Then("validation error for alternate phone is displayed")
+    public void validation_error_for_alternate_phone_is_displayed() {
+        WebElement validationError = TestContext.wait.until(ExpectedConditions.presenceOfElementLocated(alternatePhoneError));
+
+        String expectedErrorMessage = "This is a required field";
+        String actualErrorMessage = validationError.getText();
+
+        if (validationError.isDisplayed() && actualErrorMessage.equals(expectedErrorMessage)) {
+            System.out.println("validation error showed");
         } else {
             System.out.println("test failed");
         }

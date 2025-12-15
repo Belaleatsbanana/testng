@@ -1,8 +1,8 @@
 Feature: Validate alternate phone field on profile
 
   Scenario: Check validation error when alternate phone field is left blank
-    Given user is logged in to Wuzzuf
-    When user navigates to profile page
+    Given user is logged in to wuzzuf
+    When user clicks on edit profile
     And user fills personal information
     And user selects birth date
     And user selects gender and nationality

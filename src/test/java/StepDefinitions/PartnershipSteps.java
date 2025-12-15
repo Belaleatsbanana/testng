@@ -1,12 +1,11 @@
 package StepDefinitions;
 
-import utils.WuzzufLogin;
 import io.cucumber.java.en.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class T3_TCN_PART_01_Steps {
+public class PartnershipSteps {
     
     // Locators
     private final By profileDropdown = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div");
