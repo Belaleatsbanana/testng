@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import java.util.List;
 
 public class TrainingSteps {
     
@@ -12,13 +13,13 @@ public class TrainingSteps {
     private final By addTrainingButton = By.xpath("//div[@id='app']/div/div[2]/div[2]/div[5]/button");
     private final By trainingTitleField = By.name("title");
     private final By trainingOrganizationField = By.name("organization");
-    private final By trainingStartMonthDropdown = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Month'])[1]/following::div[4]");
+    private final By trainingStartMonthDropdown = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Month'])[1]/following::div[3]");
     private final By trainingStartYearDropdown = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Year'])[1]/following::div[4]");
     private final By monthYearOption = By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-0')]");
     private final By trainingDescriptionField = By.name("description");
     private final By saveTrainingButton = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Cancel'])[1]/following::button[1]");
     private final By deleteButtonTraining = By.xpath("//button[contains(text(),'Delete')]");
-    private final By organizationError = By.xpath("//span[contains(text(),'organization') or contains(text(),'Organization') or contains(text(),'required')]");
+    private final By organizationError = By.xpath("//*[contains(text(), 'This is a required field')]");
     private final By successMessage = By.xpath("//*[contains(text(),'success') or contains(text(),'Success') or contains(text(),'added')]");
 
     @And("user clicks Add Training button")
@@ -127,10 +128,10 @@ public class TrainingSteps {
     public void training_is_deleted_successfully() throws InterruptedException {
         Thread.sleep(2000);
         
-        By successModal = By.xpath("/html/body/div[1]/div/div[4]/div/div");
-        WebElement successElement = TestContext.wait.until(ExpectedConditions.visibilityOfElementLocated(successModal));
+        By remainingTrainingItems = By.xpath("/html/body/div[1]/div/div[2]/div[2]/div[5]/ul/li");
+        List<WebElement> remainingTrainings = TestContext.driver.findElements(remainingTrainingItems);
 
-        if (successElement.isDisplayed()) {
+        if (remainingTrainings.isEmpty()) {
             System.out.println("training deleted");
         } else {
             System.out.println("test failed");
@@ -140,10 +141,15 @@ public class TrainingSteps {
     @Then("validation error for organization is displayed")
     public void validation_error_for_organization_is_displayed() throws InterruptedException {
         Thread.sleep(1000);
-        WebElement errorMessage = TestContext.wait.until(ExpectedConditions.visibilityOfElementLocated(organizationError));
+        String expectedErrorMessage = "This is a required field";
+        WebElement errorMessage = TestContext.wait.until(ExpectedConditions.visibilityOfElementLocated(
+            By.xpath("//*[contains(text(), '" + expectedErrorMessage + "')]")
+        ));
 
-        if (errorMessage.isDisplayed()) {
-            System.out.println("organization validation error displayed");
+        String actualErrorMessage = errorMessage.getText().trim();
+
+        if (actualErrorMessage.equals(expectedErrorMessage)) {
+            System.out.println("validation error showed");
         } else {
             System.out.println("test failed");
         }

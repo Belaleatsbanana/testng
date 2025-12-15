@@ -20,12 +20,12 @@ public class T11_TCN_TRAIN_01_Test {
     private final By profileDropdown = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div");
     private final By editProfileOption = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div[2]/div/div[4]/a/span");
     private final By educationTab = By.linkText("Education");
-    private final By addTrainingButton = By.xpath("//button[@type='button']");
-    private final By titleField = By.name("trainingTitle");
+    private final By addTrainingButton = By.xpath("//div[@id='app']/div/div[2]/div[2]/div[5]/button");
+    private final By titleField = By.name("title");
     private final By startMonthDropdown = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Month'])[1]/following::div[3]");
     private final By startYearDropdown = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Year'])[1]/following::div[4]");
-    private final By monthYearOption = By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-')]");
-    private final By descriptionField = By.name("trainingDescription");
+    private final By monthYearOption = By.xpath("//div[contains(@id, 'react-select') and contains(@id, 'option-0')]");
+    private final By descriptionField = By.name("description");
     private final By saveButton = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Cancel'])[1]/following::button[1]");
 
     @BeforeMethod
@@ -83,29 +83,21 @@ public class T11_TCN_TRAIN_01_Test {
         System.out.println("Organization field left empty intentionally");
 
         // Step 7: Select Start Month
-        WebElement monthDropdown = wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Month'])[1]/following::div[3]")
-        ));
+        WebElement monthDropdown = wait.until(ExpectedConditions.elementToBeClickable(startMonthDropdown));
         monthDropdown.click();
         Thread.sleep(500);
 
-        WebElement monthOption = wait.until(ExpectedConditions.presenceOfElementLocated(
-                monthYearOption
-        ));
+        WebElement monthOption = wait.until(ExpectedConditions.presenceOfElementLocated(monthYearOption));
         js.executeScript("arguments[0].click();", monthOption);
         System.out.println("Selected Start Month");
         Thread.sleep(500);
 
         // Step 8: Select Start Year
-        WebElement yearDropdown = wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Year'])[1]/following::div[4]")
-        ));
+        WebElement yearDropdown = wait.until(ExpectedConditions.elementToBeClickable(startYearDropdown));
         yearDropdown.click();
         Thread.sleep(500);
 
-        WebElement yearOption = wait.until(ExpectedConditions.presenceOfElementLocated(
-                monthYearOption
-        ));
+        WebElement yearOption = wait.until(ExpectedConditions.presenceOfElementLocated(monthYearOption));
         js.executeScript("arguments[0].click();", yearOption);
         System.out.println("Selected Start Year");
         Thread.sleep(500);
@@ -117,10 +109,8 @@ public class T11_TCN_TRAIN_01_Test {
         Thread.sleep(500);
 
         // Step 10: Click Save button
-        WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Cancel'])[1]/following::button[1]")
-        ));
-        saveButton.click();
+        WebElement saveBtnElement = wait.until(ExpectedConditions.elementToBeClickable(saveButton));
+        saveBtnElement.click();
         System.out.println("Clicked Save button without filling Organization");
         Thread.sleep(1500);
 
