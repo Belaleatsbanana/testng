@@ -1,9 +1,9 @@
-Feature: Validate ReCAPTCHA on contact form
+Feature: feature to test partnership submission without doing CAPTCHA
 
-  Scenario: Check reCAPTCHA validation when submitting contact form without completing it
-    Given user is logged in to Wuzzuf
-    When user navigates to contact us page
-    And user fills subject with "Partnership Request"
-    And user fills message with "Partnership message test"
-    And clicks send button without completing reCAPTCHA
-    Then reCAPTCHA validation error is displayed
+  Scenario: ensure partnership request is unsuccessful with invalid CAPTCHA
+    Given user is logged in to wuzzuf
+    When user clicks on become a partner
+    And user fills subject
+    And user fills message
+    And clicks send button
+    Then CAPTCHA validation error is displayed

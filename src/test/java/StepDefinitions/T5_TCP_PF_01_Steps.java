@@ -1,20 +1,13 @@
+package StepDefinitions;
+
+import utils.WuzzufLogin;
+import io.cucumber.java.en.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.Test;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.AfterMethod;
 
-import java.time.Duration;
-
-public class T5_TCP_PF_01_Test {
-    protected WebDriver driver;
-    protected WebDriverWait wait;
+public class T5_TCP_PF_01_Steps {
     
     // Locators
     private final By profileDropdown = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div");
@@ -43,35 +36,20 @@ public class T5_TCP_PF_01_Test {
     private final By saveButton = By.xpath("//div[@id='app']/div/div[2]/div[2]/form/button");
     private final By successModal = By.xpath("/html/body/div[1]/div/div[4]/div/div/div");
 
-    @BeforeMethod
-    public void setUp() {
-        System.out.println("Setting up test...");
-        System.setProperty("webdriver.chrome.driver", "/home/fax/Downloads/chromedriver-linux64/chromedriver");
-        ChromeOptions option = new ChromeOptions();
-        option.addArguments("--remote-allow-origins=*");
-        option.addArguments("--start-maximized");
-        driver = new ChromeDriver(option);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    }
-
-    @Test
-    public void testProfileUpdateSuccess() throws InterruptedException {
-        // Step 1: Login
-        new WuzzufLogin(driver).login();
-        Thread.sleep(2000);
-
-        // Step 2: Navigate to profile
-        wait.until(ExpectedConditions.elementToBeClickable(profileDropdown)).click();
+    @When("user clicks on edit profile")
+    public void user_clicks_on_edit_profile() throws InterruptedException {
+        TestContext.wait.until(ExpectedConditions.elementToBeClickable(profileDropdown)).click();
         System.out.println("Clicked profile dropdown");
         Thread.sleep(1500);
 
-        wait.until(ExpectedConditions.elementToBeClickable(editProfileOption)).click();
+        TestContext.wait.until(ExpectedConditions.elementToBeClickable(editProfileOption)).click();
         System.out.println("Navigated to profile page");
         Thread.sleep(2000);
+    }
 
-        // Step 3: Fill personal information
-        WebElement firstName = wait.until(ExpectedConditions.elementToBeClickable(firstNameField));
+    @And("user fills personal information")
+    public void user_fills_personal_information() throws InterruptedException {
+        WebElement firstName = TestContext.wait.until(ExpectedConditions.elementToBeClickable(firstNameField));
         firstName.click();
         Thread.sleep(200);
         firstName.sendKeys(Keys.CONTROL + "a");
@@ -80,7 +58,7 @@ public class T5_TCP_PF_01_Test {
         System.out.println("Filled first name");
         Thread.sleep(500);
 
-        WebElement middleName = driver.findElement(middleNameField);
+        WebElement middleName = TestContext.driver.findElement(middleNameField);
         middleName.click();
         Thread.sleep(200);
         middleName.sendKeys(Keys.CONTROL + "a");
@@ -89,7 +67,7 @@ public class T5_TCP_PF_01_Test {
         System.out.println("Filled middle name");
         Thread.sleep(500);
 
-        WebElement lastName = driver.findElement(lastNameField);
+        WebElement lastName = TestContext.driver.findElement(lastNameField);
         lastName.click();
         Thread.sleep(200);
         lastName.sendKeys(Keys.CONTROL + "a");
@@ -97,86 +75,100 @@ public class T5_TCP_PF_01_Test {
         lastName.sendKeys("bell");
         System.out.println("Filled last name");
         Thread.sleep(500);
+    }
 
-        // Step 4: Select birth date
-        driver.findElement(birthDayInput).click();
+    @And("user selects birth date")
+    public void user_selects_birth_date() throws InterruptedException {
+        TestContext.driver.findElement(birthDayInput).click();
         Thread.sleep(1500);
-        wait.until(ExpectedConditions.elementToBeClickable(birthDayOption)).click();
+        TestContext.wait.until(ExpectedConditions.elementToBeClickable(birthDayOption)).click();
         Thread.sleep(1000);
 
-        driver.findElement(birthMonthInput).click();
+        TestContext.driver.findElement(birthMonthInput).click();
         Thread.sleep(1500);
-        wait.until(ExpectedConditions.elementToBeClickable(birthMonthOption)).click();
+        TestContext.wait.until(ExpectedConditions.elementToBeClickable(birthMonthOption)).click();
         Thread.sleep(1000);
 
-        driver.findElement(birthYearInput).click();
+        TestContext.driver.findElement(birthYearInput).click();
         Thread.sleep(1500);
-        wait.until(ExpectedConditions.elementToBeClickable(birthYearOption)).click();
+        TestContext.wait.until(ExpectedConditions.elementToBeClickable(birthYearOption)).click();
         Thread.sleep(1000);
+    }
 
-        // Step 5: Select gender and nationality
-        driver.findElement(genderOption).click();
+    @And("user selects gender and nationality")
+    public void user_selects_gender_and_nationality() throws InterruptedException {
+        TestContext.driver.findElement(genderOption).click();
         Thread.sleep(800);
 
-        driver.findElement(nationalityInput).click();
+        TestContext.driver.findElement(nationalityInput).click();
         Thread.sleep(1500);
-        wait.until(ExpectedConditions.elementToBeClickable(nationalityOption)).click();
+        TestContext.wait.until(ExpectedConditions.elementToBeClickable(nationalityOption)).click();
         Thread.sleep(1000);
+    }
 
-        // Step 6: Select marital status
-        driver.findElement(maritalStatusOption).click();
+    @And("user selects marital status")
+    public void user_selects_marital_status() throws InterruptedException {
+        TestContext.driver.findElement(maritalStatusOption).click();
         Thread.sleep(800);
+    }
 
-        // Step 7: Select additional fields
-        WebElement nameDropdown = driver.findElement(nameDropdownContainer);
+    @And("user selects additional profile fields")
+    public void user_selects_additional_profile_fields() throws InterruptedException {
+        WebElement nameDropdown = TestContext.driver.findElement(nameDropdownContainer);
         WebElement nameInput = nameDropdown.findElement(By.xpath(".//input[contains(@id,'react-select-')]"));
         nameInput.click();
         Thread.sleep(1500);
         String nameInputId = nameInput.getAttribute("id").replace("-input", "");
-        wait.until(ExpectedConditions.elementToBeClickable(
+        TestContext.wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//div[contains(@id,'" + nameInputId + "-option')]")
         )).click();
         Thread.sleep(1000);
 
-        WebElement militaryStatus = driver.findElement(militaryStatusContainer);
+        WebElement militaryStatus = TestContext.driver.findElement(militaryStatusContainer);
         WebElement militaryInput = militaryStatus.findElement(By.xpath(".//input[contains(@id,'react-select-')]"));
         militaryInput.click();
         Thread.sleep(1500);
         String militaryInputId = militaryInput.getAttribute("id").replace("-input", "");
-        wait.until(ExpectedConditions.elementToBeClickable(
+        TestContext.wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//div[contains(@id,'" + militaryInputId + "-option')]")
         )).click();
         Thread.sleep(1000);
+    }
 
-        // Step 8: Select driving licenses
-        driver.findElement(drivingLicense1).click();
+    @And("user selects driving licenses")
+    public void user_selects_driving_licenses() throws InterruptedException {
+        TestContext.driver.findElement(drivingLicense1).click();
         Thread.sleep(800);
-        driver.findElement(drivingLicense2).click();
+        TestContext.driver.findElement(drivingLicense2).click();
         Thread.sleep(800);
+    }
 
-        // Step 9: Select location
-        WebElement city = driver.findElement(cityContainer);
+    @And("user selects location")
+    public void user_selects_location() throws InterruptedException {
+        WebElement city = TestContext.driver.findElement(cityContainer);
         WebElement cityInput = city.findElement(By.xpath(".//input[contains(@id,'react-select-')]"));
         cityInput.click();
         Thread.sleep(1500);
         String cityInputId = cityInput.getAttribute("id").replace("-input", "");
-        wait.until(ExpectedConditions.elementToBeClickable(
+        TestContext.wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//div[contains(@id,'" + cityInputId + "-option')]")
         )).click();
         Thread.sleep(1000);
 
-        WebElement area = driver.findElement(areaContainer);
+        WebElement area = TestContext.driver.findElement(areaContainer);
         WebElement areaInput = area.findElement(By.xpath(".//input[contains(@id,'react-select-')]"));
         areaInput.click();
         Thread.sleep(1500);
         String areaInputId = areaInput.getAttribute("id").replace("-input", "");
-        wait.until(ExpectedConditions.elementToBeClickable(
+        TestContext.wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//div[contains(@id,'" + areaInputId + "-option')]")
         )).click();
         Thread.sleep(1000);
+    }
 
-        // Step 10: Fill contact information
-        WebElement primaryPhone = driver.findElement(primaryPhoneField);
+    @And("user fills contact information")
+    public void user_fills_contact_information() throws InterruptedException {
+        WebElement primaryPhone = TestContext.driver.findElement(primaryPhoneField);
         primaryPhone.click();
         Thread.sleep(200);
         primaryPhone.sendKeys(Keys.CONTROL + "a");
@@ -185,7 +177,7 @@ public class T5_TCP_PF_01_Test {
         System.out.println("Filled primary phone");
         Thread.sleep(500);
 
-        WebElement otherPhone = driver.findElement(otherPhoneField);
+        WebElement otherPhone = TestContext.driver.findElement(otherPhoneField);
         otherPhone.click();
         Thread.sleep(200);
         otherPhone.sendKeys(Keys.CONTROL + "a");
@@ -193,27 +185,23 @@ public class T5_TCP_PF_01_Test {
         otherPhone.sendKeys("01116615352");
         System.out.println("Filled other phone");
         Thread.sleep(500);
-
-        // Step 11: Save profile
-        driver.findElement(saveButton).click();
-        System.out.println("Clicked save button");
-        Thread.sleep(2000);
-
-
     }
 
-    @AfterMethod
-    public void tearDown() {
-        WebElement success = wait.until(ExpectedConditions.presenceOfElementLocated(successModal));
+    @And("clicks save profile button")
+    public void clicks_save_profile_button() throws InterruptedException {
+        TestContext.driver.findElement(saveButton).click();
+        System.out.println("Clicked save button");
+        Thread.sleep(2000);
+    }
+
+    @Then("success message is displayed")
+    public void success_message_is_displayed() {
+        WebElement success = TestContext.wait.until(ExpectedConditions.presenceOfElementLocated(successModal));
 
         if (success.isDisplayed()) {
             System.out.println("profile updated successfully");
         } else {
             System.out.println("test failed");
         }
-
-        driver.close();
-        driver.quit();
-
     }
 }

@@ -1,8 +1,8 @@
-Feature: Update profile successfully
+Feature: feature to test profile update functionality
 
-  Scenario: Check profile update is successful with valid information
-    Given user is logged in to Wuzzuf
-    When user navigates to profile page
+  Scenario: check profile update is successful with valid information
+    Given user is logged in to wuzzuf
+    When user clicks on edit profile
     And user fills personal information
     And user selects birth date
     And user selects gender and nationality
@@ -12,4 +12,4 @@ Feature: Update profile successfully
     And user selects location
     And user fills contact information
     And clicks save profile button
-    Then profile is updated successfully
+    Then success message is displayed

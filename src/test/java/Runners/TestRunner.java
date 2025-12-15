@@ -1,19 +1,22 @@
 package Runners;
 
-import io.cucumber.junit.Cucumber;
-import io.cucumber.junit.CucumberOptions;
-import org.junit.runner.RunWith;
-
-@RunWith(Cucumber.class)
-@CucumberOptions(
-        features = "src/test/resources/features",
-        glue = {"StepDefinitions"},
-        plugin = {
-                "pretty",
-                "html:target/cucumber-report.html",
-                "json:target/cucumber-report.json"
-        },
-        monochrome = true
-)
 public class TestRunner {
+
+    static void main() {
+        try {
+            io.cucumber.core.cli.Main.run(
+                    new String[]{
+                            "--glue", "StepDefinitions",
+                            "--plugin", "pretty",
+                            "--plugin", "html:target/cucumber-report.html",
+                            "--plugin", "json:target/cucumber-report.json",
+                            "src/test/resources/features"
+                    },
+                    Thread.currentThread().getContextClassLoader()
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
 }

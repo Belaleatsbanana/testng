@@ -7,6 +7,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 void main() throws InterruptedException {
+    // Locators
+    By profileDropdown = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div");
+    By contactUsOption = By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div[2]/div/div[9]/a/div/span");
+    By subjectField = By.id("subject");
+    By messageField = By.id("message");
+    By sendButton = By.id("popup_send");
+    By captchaError = By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Sending...'])[1]/following::p[1]");
+    
     System.setProperty("webdriver.chrome.driver", "/home/fax/Downloads/chromedriver-linux64/chromedriver");
 
     ChromeOptions option = new ChromeOptions();
@@ -29,46 +37,40 @@ void main() throws InterruptedException {
         Thread.sleep(2000);
 
         // Step 3: Click on profile dropdown
-        wait.until(ExpectedConditions.elementToBeClickable(
-            By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div/div/div/div")
-        )).click();
+        wait.until(ExpectedConditions.elementToBeClickable(profileDropdown)).click();
         IO.println("Clicked profile dropdown");
         Thread.sleep(1000);
 
         // Step 4: Click on Contact Us option
-        wait.until(ExpectedConditions.elementToBeClickable(
-            By.xpath("//div[@id='app']/div/div/header/div/div[2]/div[2]/div/div/div[2]/div/div[9]/a/div/span")
-        )).click();
+        wait.until(ExpectedConditions.elementToBeClickable(contactUsOption)).click();
         IO.println("Clicked contact us");
         Thread.sleep(2000);
 
         // Step 5: Fill in subject field
-        WebElement subjectField = wait.until(ExpectedConditions.elementToBeClickable(By.id("subject")));
-        subjectField.click();
+        WebElement subject = wait.until(ExpectedConditions.elementToBeClickable(subjectField));
+        subject.click();
         Thread.sleep(500);
-        subjectField.clear();
-        subjectField.sendKeys("Partnership Request");
+        subject.clear();
+        subject.sendKeys("Partnership Request");
         IO.println("Filled subject field");
         Thread.sleep(1000);
 
         // Step 6: Fill in message field
-        WebElement messageField = wait.until(ExpectedConditions.elementToBeClickable(By.id("message")));
-        messageField.click();
+        WebElement message = wait.until(ExpectedConditions.elementToBeClickable(messageField));
+        message.click();
         Thread.sleep(500);
-        messageField.clear();
-        messageField.sendKeys("Partnership message test");
+        message.clear();
+        message.sendKeys("Partnership message test");
         IO.println("Filled message field");
         Thread.sleep(1000);
 
         // Step 7: Click send button without completing reCAPTCHA
-        driver.findElement(By.id("popup_send")).click();
+        driver.findElement(sendButton).click();
         IO.println("Clicked send button");
         Thread.sleep(2000);
 
         // Step 8: Verify error message appears
-        WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
-            By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Sending...'])[1]/following::p[1]")
-        ));
+        WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(captchaError));
 
         String expectedErrorMessage = "The Recaptcha field is required.";
         String actualErrorMessage = errorMessage.getText();
