@@ -65,9 +65,16 @@ void main() throws InterruptedException {
         wait.until(ExpectedConditions.elementToBeClickable(degreeOption1)).click();
 
         // Step 7: fill degree name
-        WebElement degreeNameFld = wait.until(ExpectedConditions.elementToBeClickable(degreeNameField));
+        WebElement degreeNameFld = wait.until(ExpectedConditions.presenceOfElementLocated(degreeNameField));
+        driver.executeScript("arguments[0].scrollIntoView({block: 'center'});", degreeNameFld);
+        Thread.sleep(300);
+        driver.executeScript("arguments[0].focus();", degreeNameFld);
+        driver.executeScript("arguments[0].value = '';", degreeNameFld);
         degreeNameFld.click();
-        degreeNameFld.sendKeys(Keys.CONTROL + "a", Keys.DELETE, "MS");
+        Thread.sleep(200);
+        degreeNameFld.sendKeys("MS");
+        IO.println("filled degree name");
+        Thread.sleep(500);
 
         // Step 8: select country
         wait.until(ExpectedConditions.elementToBeClickable(countryDropdown)).click();
@@ -75,9 +82,13 @@ void main() throws InterruptedException {
 
         // Step 9: fill school
         WebElement schoolField = wait.until(ExpectedConditions.presenceOfElementLocated(schoolNameField));
-        driver.executeScript("arguments[0].scrollIntoView(true);", schoolField);
+        driver.executeScript("arguments[0].scrollIntoView({block: 'center'});", schoolField);
+        Thread.sleep(300);
+        driver.executeScript("arguments[0].focus();", schoolField);
+        driver.executeScript("arguments[0].value = '';", schoolField);
         schoolField.click();
-        schoolField.sendKeys(Keys.CONTROL + "a", Keys.DELETE, "BUE");
+        Thread.sleep(200);
+        schoolField.sendKeys("BUE");
         IO.println("filled school");
         Thread.sleep(500);
 

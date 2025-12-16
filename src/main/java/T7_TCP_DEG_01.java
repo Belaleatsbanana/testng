@@ -78,9 +78,14 @@ void main() throws InterruptedException {
         Thread.sleep(500);
 
         // Step 7: fill degree name
-        WebElement degreeNameFld = driver.findElement(degreeNameField);
+        WebElement degreeNameFld = wait.until(ExpectedConditions.presenceOfElementLocated(degreeNameField));
+        driver.executeScript("arguments[0].scrollIntoView({block: 'center'});", degreeNameFld);
+        Thread.sleep(300);
+        driver.executeScript("arguments[0].focus();", degreeNameFld);
+        driver.executeScript("arguments[0].value = '';", degreeNameFld);
         degreeNameFld.click();
-        degreeNameFld.sendKeys(Keys.CONTROL + "a", Keys.DELETE, "MS");
+        Thread.sleep(200);
+        degreeNameFld.sendKeys("MS");
         IO.println("filled degree name");
         Thread.sleep(500);
 
@@ -150,13 +155,17 @@ void main() throws InterruptedException {
         WebElement studiedSubjectsFld = wait.until(ExpectedConditions.presenceOfElementLocated(studiedSubjectsField));
         driver.executeScript("arguments[0].scrollIntoView({block: 'center'});", studiedSubjectsFld);
         Thread.sleep(500);
+        driver.executeScript("arguments[0].focus();", studiedSubjectsFld);
+        driver.executeScript("arguments[0].value = '';", studiedSubjectsFld);
+        Thread.sleep(200);
         try {
             wait.until(ExpectedConditions.elementToBeClickable(studiedSubjectsFld));
             studiedSubjectsFld.click();
         } catch (Exception e) {
             driver.executeScript("arguments[0].click();", studiedSubjectsFld);
         }
-        studiedSubjectsFld.sendKeys(Keys.CONTROL + "a", Keys.DELETE, "SQA");
+        Thread.sleep(200);
+        studiedSubjectsFld.sendKeys("SQA");
         IO.println("filled studied subjects");
         Thread.sleep(500);
 
@@ -164,13 +173,17 @@ void main() throws InterruptedException {
         WebElement notesFld = wait.until(ExpectedConditions.presenceOfElementLocated(notesField));
         driver.executeScript("arguments[0].scrollIntoView({block: 'center'});", notesFld);
         Thread.sleep(500);
+        driver.executeScript("arguments[0].focus();", notesFld);
+        driver.executeScript("arguments[0].value = '';", notesFld);
+        Thread.sleep(200);
         try {
             wait.until(ExpectedConditions.elementToBeClickable(notesFld));
             notesFld.click();
         } catch (Exception e) {
             driver.executeScript("arguments[0].click();", notesFld);
         }
-        notesFld.sendKeys(Keys.CONTROL + "a", Keys.DELETE, "SQA");
+        Thread.sleep(200);
+        notesFld.sendKeys("SQA");
         IO.println("filled notes");
         Thread.sleep(500);
 
